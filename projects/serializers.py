@@ -32,7 +32,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        if self.context['request'].user.position.slug != 'admin':
+        user = self.context['request'].user
+        if user.is_authenticated and hasattr(user, 'position') and user.position.slug != 'admin':
             representation['cost'] = None
             representation['agreement'] = None
         return representation

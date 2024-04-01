@@ -2,6 +2,7 @@ from abc import ABC
 
 from rest_framework import serializers, exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.exceptions import AuthenticationFailed
 
 
 from .models import User, Position, Status
@@ -108,7 +109,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super(CustomTokenObtainPairSerializer, self).validate(attrs)
         email = attrs.get('email', '')
-        user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
+
+        except User.DoesNotExist:
+            raise AuthenticationFailed('No user found with provided email')
         data.update(
             {
                 "user": {

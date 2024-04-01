@@ -15,7 +15,7 @@ from tasks.models import Task
 
 class TimeSheetListCreateAPIView(generics.ListCreateAPIView):
 
-    queryset = TimeSheet.objects.all()
+    queryset = TimeSheet.objects.all().order_by('-id')
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend, filters.SearchFilter,)
     filterset_fields = ('user', 'task__project',)

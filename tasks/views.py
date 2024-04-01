@@ -1,10 +1,11 @@
-from rest_framework import generics, response, views, status
+from rest_framework import generics, response, views, status, permissions
 from rest_framework.response import Response
 from django.db import connection
 from .models import Column, Mark, Task
 from users.serializers import UserSerializer
 from django.contrib.auth import get_user_model
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .filters import TaskSearchFilter
 from .serializers import (
     MarkSerializer, ColumnSerializer,
     TaskSerializer, TaskCreateSerializer,
@@ -28,10 +29,24 @@ class ColumnListAPIView(generics.ListAPIView):
 class TaskListAPIView(generics.ListAPIView):
     queryset = Task.objects.all()
     pagination_class = CustomPageNumberPagination
-    filter_backends = (dj_filters.DjangoFilterBackend,)
+    filter_backends = (dj_filters.DjangoFilterBackend, TaskSearchFilter)
     filterset_fields = ('column', 'project', 'mark',)
     serializer_class = TaskSerializer
 
+class TaskAllAPIView(generics.ListAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [TaskSearchFilter]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_authenticated:
+            queryset = Task.objects.filter(participants=user)
+            return queryset
+        else:
+            return Task.objects.none()
 
 class TaskCreateAPIView(generics.CreateAPIView):
     queryset = Task.objects.all()

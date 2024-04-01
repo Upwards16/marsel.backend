@@ -44,7 +44,7 @@ class StatusAPIView(generics.ListAPIView):
 class UserAPIView(generics.ListAPIView):
     serializer_class = UserListSerializer
     queryset = User.objects.filter(is_superuser=False)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend,)
     filterset_class = UserFilter
@@ -53,17 +53,17 @@ class UserAPIView(generics.ListAPIView):
 class UserRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     lookup_field = "pk"
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
     serializer_class = UserUpdateSerializer
     queryset = User.objects.all()
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     lookup_field = "pk"
 
 
 class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = UserCreateSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)

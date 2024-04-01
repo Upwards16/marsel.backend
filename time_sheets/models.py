@@ -14,4 +14,4 @@ class TimeSheet(models.Model):
     comment = models.TextField(blank=True)
 
     def __str__(self):
-        return self.task.name
+        return self.task.task
