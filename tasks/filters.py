@@ -12,7 +12,6 @@ class TaskSearchFilter(filters.SearchFilter):
         search_value = request.query_params.get(self.search_param)
 
         if search_value:
-            # Фильтрация по полям task и project__title
             queryset = queryset.filter(
                 Q(task__icontains=search_value) |
                 Q(project__name__icontains=search_value)
