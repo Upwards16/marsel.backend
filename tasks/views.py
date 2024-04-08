@@ -33,7 +33,7 @@ class TaskListAPIView(generics.ListAPIView):
     filterset_fields = ('column', 'project', 'mark',)
     serializer_class = TaskSerializer
 
-class TaskAllAPIView(generics.ListAPIView):
+class TaskUserAllAPIView(generics.ListAPIView):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [TaskSearchFilter]
