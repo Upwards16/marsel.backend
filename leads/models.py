@@ -21,7 +21,7 @@ class Lead(models.Model):
     )
     full_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
-    date = models.DateField()
+    date_created = models.DateField(auto_now_add=True)
     reminder_date = models.DateTimeField()
     traffic_source = models.ForeignKey(
         TrafficSource, on_delete=models.SET_NULL,
