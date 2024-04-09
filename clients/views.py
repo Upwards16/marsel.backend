@@ -11,7 +11,7 @@ class ClientFilter(dj_filters.FilterSet):
 
     class Meta:
         model = Client
-        fields = ('traffic_source', )
+        fields = ('traffic_source', 'status')
 
 
 class ClientListAPIView(generics.ListAPIView):
