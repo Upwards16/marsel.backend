@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     ClientListAPIView, ClientCreateAPIView, ClientRetrieveDeleteAPIView, ClientUpdateAPIView,
-    TrafficSourceListAPIView, ClientAllListAPIView
+    TrafficSourceListAPIView, ClientAllListAPIView, ClientStatusListAPIView
 )
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/', ClientRetrieveDeleteAPIView.as_view(), name="client-retrieve-delete"),
     path('update/<int:pk>/', ClientUpdateAPIView.as_view(), name="client-update"),
     path('traffic-sources/', TrafficSourceListAPIView.as_view(), name="client-traffic-sources"),
+    path('statuses/', ClientStatusListAPIView.as_view(), name="client-status"),
 ]

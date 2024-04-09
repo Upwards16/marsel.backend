@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Client, TrafficSource
-from .serializers import ClientSerializer, ClientCreateUpdateSerializer, TrafficSourceSerializer
+from .models import Client, TrafficSource, ClientStatus
+from .serializers import ClientSerializer, ClientCreateUpdateSerializer, TrafficSourceSerializer, ClientStatus, \
+    ClientStatusSerializer
 from config.pagination import CustomPageNumberPagination
 from django_filters import rest_framework as dj_filters
 from django.db import models as dmodels
@@ -54,3 +55,7 @@ class TrafficSourceListAPIView(generics.ListAPIView):
     serializer_class = TrafficSourceSerializer
     queryset = TrafficSource.objects.all()
     # permission_classes = (permissions.IsAuthenticated,)
+
+class ClientStatusListAPIView(generics.ListAPIView):
+    serializer_class = ClientStatusSerializer
+    queryset = ClientStatus.objects.all()
