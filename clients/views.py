@@ -6,7 +6,7 @@ from .serializers import ClientSerializer, ClientCreateUpdateSerializer, Traffic
 from config.pagination import CustomPageNumberPagination
 from django_filters import rest_framework as dj_filters
 from django.db import models as dmodels
-
+from .filters import ClientSearchFilter
 
 class ClientFilter(dj_filters.FilterSet):
 
@@ -20,8 +20,16 @@ class ClientListAPIView(generics.ListAPIView):
     queryset = Client.objects.all()
     # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
-    filter_backends = (dj_filters.DjangoFilterBackend,)
+    filter_backends = (dj_filters.DjangoFilterBackend, ClientSearchFilter)
     filterset_class = ClientFilter
+    search_fields = ('name',)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.query_params.get('search', None)
+        if search_query:
+            queryset = queryset.filter(name__icontains=search_query)
+        return queryset
 
 
 class ClientAllListAPIView(generics.ListAPIView):
