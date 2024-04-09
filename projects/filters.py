@@ -17,7 +17,7 @@ class ProjectSearchFilter(filters.SearchFilter):
         search_fields = self.get_search_fields(view, request)
         search_terms = self.get_search_terms(request)
         if len(search_terms) == 0:
-            return Project.objects.none()
+            return Project.objects.all()
 
         if not search_fields or not search_terms:
             return queryset
