@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/leads/', include('leads.urls')),
     path('api/tasks/', include('tasks.urls')),
     path('api/time-sheets/', include('time_sheets.urls')),
-    path('api/', include('analytics.urls'))
+    path('api/', include('analytics.urls')),
 ]
 urlpatterns += doc_urls
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

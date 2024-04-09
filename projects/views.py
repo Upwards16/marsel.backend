@@ -32,10 +32,15 @@ class ProjectListAPIView(generics.ListAPIView):
     queryset = Project.objects.all()
     # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
-    filter_backends = (dj_filters.DjangoFilterBackend,)
+    filter_backends = (dj_filters.DjangoFilterBackend, ProjectSearchFilter)
     filterset_class = ProjectFilter
     search_fields = ('name',)
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.query_params.get('search', None)
+        if search_query:
+            queryset = queryset.filter(name__icontains=search_query)
+        return queryset
 
 class ProjectCreateAPIView(generics.CreateAPIView):
     serializer_class = ProjectCreateSerializer
@@ -65,13 +70,6 @@ class WorkStepRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
     queryset = WorkStep.objects.all()
     # permission_classes = (permissions.IsAuthenticated,)
     lookup_field = "pk"
-
-
-class ProjectSearchListAPIView(generics.ListAPIView):
-    serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
-    filter_backends = (ProjectSearchFilter,)
-    search_fields = ('name',)
 
 
 class ParticipantsCreateAPIView(views.APIView):

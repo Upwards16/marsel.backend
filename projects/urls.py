@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     ProjectListAPIView, WorkStepCreateAPIView, WorkStepRetrieveUpdateDestroyAPIView,
     ParticipantsCreateAPIView, ParticipantsDeleteAPIView, ProjectRetrieveDestroyAPIViewAPIView,
-    StatusListAPIView, ProjectSearchListAPIView, ParticipantSearchAPIView,
+    StatusListAPIView, ParticipantSearchAPIView,
     ProjectCreateAPIView, ProjectUpdateAPIView
 )
 
@@ -16,6 +16,5 @@ urlpatterns = [
     path('participants/', ParticipantsCreateAPIView.as_view(), name="participants-create"),
     path('participants/delete/', ParticipantsDeleteAPIView.as_view(), name="participants-delete"),
     path('<int:pk>/', ProjectRetrieveDestroyAPIViewAPIView.as_view(), name="project-detail"),
-    path('search/', ProjectSearchListAPIView.as_view(), name="project_search"),
     path('participants/search/', ParticipantSearchAPIView.as_view(), name="participant_search")
 ]
