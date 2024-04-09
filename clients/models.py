@@ -1,6 +1,12 @@
 from django.db import models
 from users.models import User
 
+class ClientStatus(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class TrafficSource(models.Model):
     name = models.CharField(max_length=255)
@@ -12,6 +18,10 @@ class Client(models.Model):
     email = models.CharField(max_length=255)
     birthday = models.DateField(null=True)
     comment = models.TextField(null=True)
+    status = models.ForeignKey(
+        ClientStatus, on_delete=models.SET_NULL,
+        null=True
+    )
     manager = models.ForeignKey(
         User,
         null=True,
