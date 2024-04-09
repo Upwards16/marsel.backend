@@ -17,7 +17,7 @@ class ClientFilter(dj_filters.FilterSet):
 
 class ClientListAPIView(generics.ListAPIView):
     serializer_class = ClientSerializer
-    queryset = Client.objects.all()
+    queryset = Client.objects.all().order_by('-id')
     # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend, ClientSearchFilter)
@@ -34,7 +34,7 @@ class ClientListAPIView(generics.ListAPIView):
 
 class ClientAllListAPIView(generics.ListAPIView):
     serializer_class = ClientSerializer
-    queryset = Client.objects.all()
+    queryset = Client.objects.all().order_by('-id')
     # permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (dj_filters.DjangoFilterBackend,)
     filterset_class = ClientFilter

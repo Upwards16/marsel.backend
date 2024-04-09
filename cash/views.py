@@ -19,7 +19,7 @@ class PaymentTypeListAPIView(generics.ListCreateAPIView):
 class IncomeListCreateAPIView(generics.ListCreateAPIView):
 
     pagination_class = CustomPageNumberPagination
-    queryset = Income.objects.all()
+    queryset = Income.objects.all().order_by('-id')
     filter_backends = (dj_filters.DjangoFilterBackend, filters.SearchFilter,)
     filterset_class = IncomeFilter
     search_fields = ("account_number",)

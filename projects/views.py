@@ -29,7 +29,7 @@ class StatusListAPIView(generics.ListAPIView):
 
 class ProjectListAPIView(generics.ListAPIView):
     serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().order_by('-id')
     # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend, ProjectSearchFilter)

@@ -27,7 +27,7 @@ class ColumnListAPIView(generics.ListAPIView):
 
 
 class TaskListAPIView(generics.ListAPIView):
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by('-id')
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend, TaskSearchFilter)
     filterset_fields = ('column', 'project', 'mark',)
@@ -43,7 +43,7 @@ class TaskUserAllAPIView(generics.ListAPIView):
         user = self.request.user
 
         if user.is_authenticated:
-            queryset = Task.objects.filter(participants=user)
+            queryset = Task.objects.filter(participants=user).order_by('-id')
             return queryset
         else:
             return Task.objects.none()
