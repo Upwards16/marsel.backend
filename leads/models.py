@@ -44,7 +44,7 @@ class Lead(models.Model):
 def handle_lead_status_change(sender, instance, **kwargs):
     if instance.status.name == 'Завершённый':
         client_data = {
-            'name': instance.fullname,
+            'name': instance.full_name,
             'phone': instance.phone,
             'email': '',
             'birthday': '',
