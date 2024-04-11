@@ -42,7 +42,7 @@ class Lead(models.Model):
 
 @receiver(post_save, sender=Lead)
 def handle_lead_status_change(sender, instance, **kwargs):
-    if instance.status.name == 'завершенный':
+    if instance.status.name == 'Завершённый':
         client_data = {
             'name': instance.fullname,
             'phone': instance.phone,
