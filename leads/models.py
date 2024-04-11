@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from clients.models import TrafficSource
-from clients.serializers import ClientCreateUpdateSerializer
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 User = get_user_model()
 
@@ -39,23 +36,6 @@ class Lead(models.Model):
 
     def __str__(self):
         return self.full_name
-
-@receiver(post_save, sender=Lead)
-def handle_lead_status_change(sender, instance, **kwargs):
-    if instance.status.name == 'Завершённый':
-        client_data = {
-            'name': instance.full_name,
-            'phone': instance.phone,
-            'email': '',
-            'birthday': '',
-            'comment': instance.comment,
-            'traffic_source': instance.traffic_source,
-            'status': 'Не подтвержден',
-        }
-        client_serializer = ClientCreateUpdateSerializer(data=client_data)
-        if client_serializer.is_valid():
-            client_serializer.save()
-            instance.delete()
 
 class CallHistory(models.Model):
     lead = models.ForeignKey(
