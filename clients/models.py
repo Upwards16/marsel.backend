@@ -15,7 +15,7 @@ class TrafficSource(models.Model):
 class Client(models.Model):
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+    email = models.CharField(max_length=255, blank=True)
     birthday = models.DateField(null=True)
     comment = models.TextField(null=True)
     status = models.ForeignKey(
