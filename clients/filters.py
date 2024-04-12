@@ -12,6 +12,7 @@ class ClientSearchFilter(filters.SearchFilter):
     def filter_queryset(self, request, queryset, view):
         search_fields = self.get_search_fields(view, request)
         search_terms = self.get_search_terms(request)
+
         if len(search_terms) == 0:
             return Client.objects.all()
 
@@ -23,7 +24,6 @@ class ClientSearchFilter(filters.SearchFilter):
             for search_field in search_fields
         ]
 
-        base = queryset
         conditions = []
         for search_term in search_terms:
             queries = [
@@ -31,16 +31,20 @@ class ClientSearchFilter(filters.SearchFilter):
                 for orm_lookup in orm_lookups
             ]
             conditions.append(reduce(operator.or_, queries))
+
         queryset = queryset.filter(reduce(operator.and_, conditions))
 
         if self.must_call_distinct(queryset, search_fields):
-            queryset = distinct(queryset, base)
+            queryset = distinct(queryset)
 
-        user = request.user
+        return self.filter_by_user_position(request.user, queryset)
+
+    def filter_by_user_position(self, user, queryset):
         if user.position and user.position.name == 'admin':
             return queryset
         elif user.position and user.position.name == 'Менеджер по продажам':
             return queryset.filter(manager=user, status__name='Подтвержден')
         else:
             return queryset.none()
+
 
