@@ -6,13 +6,8 @@ from .serializers import ClientSerializer, ClientCreateUpdateSerializer, Traffic
 from config.pagination import CustomPageNumberPagination
 from django_filters import rest_framework as dj_filters
 from django.db import models as dmodels
-from .filters import ClientSearchFilter
+from .filters import ClientSearchFilter, ClientFilter
 
-class ClientFilter(dj_filters.FilterSet):
-
-    class Meta:
-        model = Client
-        fields = ('traffic_source', 'status')
 
 
 class ClientListAPIView(generics.ListAPIView):
