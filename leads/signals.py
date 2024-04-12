@@ -7,7 +7,7 @@ from django.db import transaction
 
 @receiver(post_save, sender=Lead)
 def handle_lead_status_change(sender, instance, **kwargs):
-    if instance.status.name.strip() == 'Завершённый':
+    if instance.status.is_finished:
         client_data = {
             'name': instance.full_name,
             'phone': instance.phone,
