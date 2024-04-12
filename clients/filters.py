@@ -43,3 +43,4 @@ class ClientSearchFilter(filters.SearchFilter):
             return queryset.filter(manager=user, status__name='Подтвержден')
         else:
             return queryset.none()
+
