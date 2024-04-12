@@ -4,18 +4,24 @@ from functools import reduce
 from django.db import models
 from rest_framework import filters
 from rest_framework.compat import distinct
-from .models import Client
-
+from .models import Client, ClientStatus, TrafficSource
+from django.contrib.auth import get_user_model
 import django_filters as dj_filters
 
+User = get_user_model()
+
 class ClientFilter(dj_filters.FilterSet):
-    manager = dj_filters.CharFilter(field_name='manager__fullname', lookup_expr='icontains')
-    status = dj_filters.CharFilter(field_name='status__name', lookup_expr='icontains')
-    traffic_source = dj_filters.CharFilter(field_name='traffic_source__name', lookup_expr='icontains')
+    status = dj_filters.ModelChoiceFilter(field_name="status", queryset=ClientStatus.objects.all())
+    manager = dj_filters.ModelChoiceFilter(field_name="manager", queryset=User.objects.all())
+    traffic_source = dj_filters.ModelChoiceFilter(field_name="traffic_source", queryset=TrafficSource.objects.all())
 
     class Meta:
         model = Client
-        fields = ['manager', 'status', 'traffic_source']
+        fields = (
+            'status',
+            'manager',
+            'traffic_source'
+        )
 
 class ClientSearchFilter(filters.SearchFilter):
 

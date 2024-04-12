@@ -8,8 +8,6 @@ from django_filters import rest_framework as dj_filters
 from django.db import models as dmodels
 from .filters import ClientSearchFilter, ClientFilter
 
-
-
 class ClientListAPIView(generics.ListAPIView):
     serializer_class = ClientSerializer
     queryset = Client.objects.all().order_by('-id')
