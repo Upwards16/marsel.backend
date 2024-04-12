@@ -6,6 +6,7 @@ from rest_framework import filters
 from rest_framework.compat import distinct
 from .models import Client
 
+
 class ClientSearchFilter(filters.SearchFilter):
 
     def filter_queryset(self, request, queryset, view):
@@ -34,4 +35,11 @@ class ClientSearchFilter(filters.SearchFilter):
 
         if self.must_call_distinct(queryset, search_fields):
             queryset = distinct(queryset, base)
-        return queryset
+
+        user = request.user
+        if user.position and user.position.name == 'admin':
+            return queryset
+        elif user.position and user.position.name == 'Менеджер по продажам':
+            return queryset.filter(manager=user)
+        else:
+            return queryset.none()

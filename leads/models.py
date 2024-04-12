@@ -43,7 +43,7 @@ class CallHistory(models.Model):
         Lead, on_delete=models.CASCADE,
         related_name="call_history"
     )
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
 
     def __str__(self):
