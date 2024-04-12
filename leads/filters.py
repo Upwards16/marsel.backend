@@ -18,16 +18,16 @@ class LeadFilter(dj_filters.FilterSet):
             'status',
             'user'
         )
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-        if user and not user.is_superuser:
-            self.filters['user'] = dj_filters.ModelChoiceFilter(queryset=User.objects.filter(id=user.id))
-
     @property
     def qs(self):
         parent = super().qs
-        if self.request and not self.request.user.is_superuser:
-            return parent.filter(Q(user=self.request.user) | Q(manager=self.request.user))
-        return parent
+        user = self.request.user
+
+        if user.position and user.position.name == 'admin':
+            return parent
+
+        elif user.position and user.position.name == 'Менеджер по продажам':
+            return parent.filter(user=user)
+
+        else:
+            return parent.none()
