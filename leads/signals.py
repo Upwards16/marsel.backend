@@ -3,9 +3,7 @@ from django.dispatch import receiver
 from .models import Lead
 from clients.serializers import ClientCreateUpdateSerializer
 from django.db import transaction
-import logging
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+
 
 @receiver(post_save, sender=Lead)
 def handle_lead_status_change(sender, instance, **kwargs):
@@ -25,6 +23,5 @@ def handle_lead_status_change(sender, instance, **kwargs):
             with transaction.atomic():
                 client = client_serializer.save()
                 instance.delete()
-            return HttpResponseRedirect(reverse('clients-all'))
         else:
             pass
