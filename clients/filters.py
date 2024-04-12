@@ -40,6 +40,6 @@ class ClientSearchFilter(filters.SearchFilter):
         if user.position and user.position.name == 'admin':
             return queryset
         elif user.position and user.position.name == 'Менеджер по продажам':
-            return queryset.filter(manager=user)
+            return queryset.filter(manager=user, status__name='Подтвержден')
         else:
             return queryset.none()
