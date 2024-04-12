@@ -6,6 +6,16 @@ from rest_framework import filters
 from rest_framework.compat import distinct
 from .models import Client
 
+import django_filters as dj_filters
+
+class ClientFilter(dj_filters.FilterSet):
+    manager = dj_filters.CharFilter(field_name='manager__fullname', lookup_expr='icontains')
+    status = dj_filters.CharFilter(field_name='status__name', lookup_expr='icontains')
+    traffic_source = dj_filters.CharFilter(field_name='traffic_source__name', lookup_expr='icontains')
+
+    class Meta:
+        model = Client
+        fields = ['manager', 'status', 'traffic_source']
 
 class ClientSearchFilter(filters.SearchFilter):
 
