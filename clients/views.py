@@ -1,19 +1,20 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, filters
 from .models import Client, TrafficSource, ClientStatus
 from .serializers import ClientSerializer, ClientCreateUpdateSerializer, TrafficSourceSerializer, ClientStatus, \
     ClientStatusSerializer
 from config.pagination import CustomPageNumberPagination
 from django_filters import rest_framework as dj_filters
 from django.db import models as dmodels
-from .filters import ClientSearchFilter, ClientFilter
+from .filters import ClientFilter
+
 
 class ClientListAPIView(generics.ListAPIView):
     serializer_class = ClientSerializer
     queryset = Client.objects.all().order_by('-id')
     # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
-    filter_backends = (dj_filters.DjangoFilterBackend, ClientSearchFilter)
+    filter_backends = (dj_filters.DjangoFilterBackend, filters.SearchFilter)
     filterset_class = ClientFilter
     search_fields = ('name',)
 
