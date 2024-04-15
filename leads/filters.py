@@ -6,8 +6,8 @@ from .models import Lead
 User = get_user_model()
 
 class LeadFilter(dj_filters.FilterSet):
-    start_date = dj_filters.DateFilter(field_name="date", lookup_expr="gte")
-    end_date = dj_filters.DateFilter(field_name="date", lookup_expr="lte")
+    start_date = dj_filters.DateFilter(field_name="date_created", lookup_expr="gte")
+    end_date = dj_filters.DateFilter(field_name="date_created", lookup_expr="lte")
     user = dj_filters.ModelChoiceFilter(queryset=User.objects.all())
 
     class Meta:
@@ -18,6 +18,7 @@ class LeadFilter(dj_filters.FilterSet):
             'status',
             'user'
         )
+
     @property
     def qs(self):
         parent = super().qs
@@ -31,3 +32,5 @@ class LeadFilter(dj_filters.FilterSet):
 
         else:
             return parent.none()
+
+
