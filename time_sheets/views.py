@@ -1,4 +1,4 @@
-from rest_framework import generics, filters
+from rest_framework import generics, filters, status
 from config.pagination import CustomPageNumberPagination
 from rest_framework.response import Response
 
@@ -26,6 +26,12 @@ class TimeSheetListCreateAPIView(generics.ListCreateAPIView):
         else:
             return TimeSheetCreateSerializer
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        if user:
+            serializer.save(user=user)
+        else:
+            return Response({"error": "User is not specified"}, status=status.HTTP_400_BAD_REQUEST)
 
 class TimeSheetRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TimeSheet.objects.all()
