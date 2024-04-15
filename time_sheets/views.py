@@ -9,16 +9,15 @@ from tasks.serializers import TaskSerializer
 from projects.serializers import ProjectSerializer
 from projects.models import Project
 from projects.views import ProjectFilter
-
+from .filters import TimeSheetFilter
 from tasks.models import Task
 
 
 class TimeSheetListCreateAPIView(generics.ListCreateAPIView):
-
     queryset = TimeSheet.objects.all().order_by('-id')
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend, filters.SearchFilter,)
-    filterset_fields = ('user', 'task__project',)
+    filterset_class = TimeSheetFilter
     search_fields = ('task__task', )
 
     def get_serializer_class(self):
