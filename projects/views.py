@@ -1,7 +1,7 @@
 from config.pagination import CustomPageNumberPagination
 from django.contrib.auth import get_user_model
 from django_filters import rest_framework as dj_filters
-from rest_framework import generics, views, status
+from rest_framework import generics, views, status, filters
 from rest_framework.response import Response
 from users.serializers import UserSerializer
 
@@ -26,9 +26,10 @@ class ProjectListAPIView(generics.ListAPIView):
     queryset = Project.objects.all().order_by('-id')
     # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPageNumberPagination
-    filter_backends = (dj_filters.DjangoFilterBackend, ProjectSearchFilter)
+    filter_backends = (dj_filters.DjangoFilterBackend, filters.SearchFilter)
     filterset_class = ProjectFilter
     search_fields = ('name',)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         search_query = self.request.query_params.get('search', None)
