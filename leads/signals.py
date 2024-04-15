@@ -23,7 +23,6 @@ def handle_lead_status_change(sender, instance, **kwargs):
             if client_serializer.is_valid():
                 with transaction.atomic():
                     client = client_serializer.save()
-                    instance.delete()
             else:
                 pass
 
