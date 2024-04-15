@@ -5,7 +5,7 @@ from rest_framework import generics, views, status
 from rest_framework.response import Response
 from users.serializers import UserSerializer
 
-from .filters import ProjectSearchFilter, ParticipantSearchFilter
+from .filters import ProjectSearchFilter, ParticipantSearchFilter, ProjectFilter
 from .models import Project, WorkStep, Status
 from .serializers import (
     ProjectSerializer, WorkStepSerializer, StatusSerializer, ProjectCreateSerializer
@@ -13,12 +13,6 @@ from .serializers import (
 
 User = get_user_model()
 
-
-class ProjectFilter(dj_filters.FilterSet):
-
-    class Meta:
-        model = Project
-        fields = ('client', 'status')
 
 
 class StatusListAPIView(generics.ListAPIView):

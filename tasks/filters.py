@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from rest_framework import filters
 from .models import Task
-
 User = get_user_model()
 
 class TaskSearchFilter(filters.SearchFilter):

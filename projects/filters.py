@@ -5,7 +5,7 @@ from django.db import models
 from rest_framework import filters
 from rest_framework.compat import distinct
 from django.contrib.auth import get_user_model
-
+import django_filters
 from .models import Project
 
 User = get_user_model()
@@ -77,3 +77,10 @@ class ParticipantSearchFilter(filters.SearchFilter):
             return queryset.exclude(pk__in=project.participants.all().values_list('pk', flat=True))
         return queryset
 
+class ProjectFilter(django_filters.FilterSet):
+    class Meta:
+        model = Project
+        fields = {
+            'status': ['exact'],
+            'client': ['exact'],
+        }
