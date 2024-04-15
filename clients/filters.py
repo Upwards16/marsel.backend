@@ -29,7 +29,7 @@ class ClientFilter(django_filters.FilterSet):
             return parent
 
         elif user.position and user.position.name == 'Менеджер по продажам':
-            return parent.filter(user=user)
+            return parent.filter(manager=user)
 
         else:
             return parent.none()
