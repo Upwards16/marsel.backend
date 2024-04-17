@@ -18,7 +18,7 @@ class LeadStatusListAPIView(generics.ListAPIView):
 
 
 class LeadListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Lead.objects.all().order_by('-id', '-status__is_finished')
+    queryset = Lead.objects.all().order_by('-status__is_finished', '-id')
     pagination_class = CustomPageNumberPagination
     filter_backends = (dj_filters.DjangoFilterBackend,)
     filterset_class = LeadFilter
