@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'drf_yasg',
+    'celery',
+    'redis',
 
     'users',
     'clients',
@@ -122,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
@@ -208,13 +210,23 @@ CORS_ALLOW_HEADERS = (
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-# Настройки Celery
-CELERY_BROKER_URL = config('CELERY_BROKER_URL')
-CELERY_ACCEPT_CONTENT = config('CELERY_ACCEPT_CONTENT')
-CELERY_TASK_SERIALIZER = config('CELERY_TASK_SERIALIZER')
-CELERY_RESULT_SERIALIZER = config('CELERY_RESULT_SERIALIZER')
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+# CELERY_TASK_SERIALIZER = config('CELERY_TASK_SERIALIZER')
+CELERY_IMPORTS = ('leads.tasks', )
+
+TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN')
+CHAT_ID = config('CHAT_ID')
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
+CELERY_TIMEZONE = 'Asia/Bishkek'
