@@ -43,13 +43,8 @@ class CallHistory(models.Model):
         Lead, on_delete=models.CASCADE,
         related_name="call_history"
     )
-    date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(null=True, default=datetime.now)
     comment = models.TextField()
 
     def __str__(self):
         return self.lead.full_name
-
-    def save(self, *args, **kwargs):
-        if not self.date:
-            self.date = datetime.now()
-        super().save(*args, **kwargs)
