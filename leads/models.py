@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from clients.models import TrafficSource
-from django.utils import timezone
-
+from datetime import datetime
 User = get_user_model()
 
 
@@ -52,5 +51,5 @@ class CallHistory(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.date:
-            self.date = timezone.now().date()
+            self.date = datetime.now()
         super().save(*args, **kwargs)
