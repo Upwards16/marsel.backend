@@ -95,7 +95,7 @@ DATABASES = {
 #         'PASSWORD': config('DB_PASSWORD'),
 #         'HOST': config('DB_HOST'),
 #         'PORT': config('DB_PORT'),
-#
+
 #     }
 # }
 
@@ -207,7 +207,6 @@ CORS_ALLOW_HEADERS = (
     'x-authorization'
 )
 
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = config('EMAIL_HOST')
