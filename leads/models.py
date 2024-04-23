@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from clients.models import TrafficSource
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -43,7 +44,7 @@ class CallHistory(models.Model):
         Lead, on_delete=models.CASCADE,
         related_name="call_history"
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now())
     comment = models.TextField()
 
     def __str__(self):
