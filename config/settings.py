@@ -233,5 +233,5 @@ SESSION_CACHE_ALIAS = "default"
 CELERY_TIMEZONE = 'Asia/Bishkek'
 
 CRONJOBS = [
-    ('50 20 * * 1-5', 'time_sheets.cron.send_time_sheet_reminder'),
+    ('5 21 * * 1-5', 'time_sheets.cron.send_time_sheet_reminder'),
 ]
