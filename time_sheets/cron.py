@@ -6,6 +6,6 @@ def my_scheduled_job():
     subject = 'Test Cron2'
     message = 'Hello I\'m Upwards2'
     email_from = EMAIL_HOST_USER
-    recipient_list = ['zulpukarovmarsel17@gmail.com']
+    recipient_list = ['ruslanbulah3@gmail.com']
 
     send_mail(subject, message, email_from, recipient_list)

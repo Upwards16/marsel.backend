@@ -233,5 +233,5 @@ SESSION_CACHE_ALIAS = "default"
 CELERY_TIMEZONE = 'Asia/Bishkek'
 
 CRONJOBS = [
-    ('50 12 * * 1-5', 'time_sheets.cron.my_scheduled_job'),
+    ('00 13 * * 1-5', 'time_sheets.cron.my_scheduled_job'),
 ]
