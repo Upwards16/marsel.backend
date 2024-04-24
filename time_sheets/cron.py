@@ -3,8 +3,8 @@ from config.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 
 def my_scheduled_job():
-    subject = 'Test Cron'
-    message = 'Hello I\'m Upwards'
+    subject = 'Test Cron2'
+    message = 'Hello I\'m Upwards2'
     email_from = EMAIL_HOST_USER
     recipient_list = ['zulpukarovmarsel17@gmail.com']
 
