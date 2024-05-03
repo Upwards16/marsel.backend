@@ -29,6 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     github = models.CharField(max_length=255, null=True)
     linkedin = models.CharField(max_length=255, null=True)
     telegram = models.CharField(max_length=255, null=True)
+    chat_id = models.PositiveIntegerField(default=0)
     phone = models.CharField(max_length=255, null=True)
     salary = models.FloatField(default=0)
     hourly_payment_cost = models.FloatField(default=0)
